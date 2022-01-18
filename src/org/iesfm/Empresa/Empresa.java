@@ -1,5 +1,8 @@
 package org.iesfm.Empresa;
 
+import org.iesfm.Empresa.exceptions.DepartmentNotFoundException;
+import org.iesfm.Empresa.exceptions.EmployeeNotFoundExceptions;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -16,19 +19,18 @@ public class Empresa implements IEmpresa {
     }
 
     @Override
-    public Empleado[] empleados(String nombre) {
+    public Empleado[] empleados(String nombre) throws EmployeeNotFoundExceptions {
         for (int i = 0; i < listaDepartamentos.length; i++) {
             Departamento departamento = listaDepartamentos[i];
             if (departamento.getNombreDepartamento().equals(nombre)) {
                 return departamento.getListaEmpleados();
             }
         }
-        System.out.println("Error el departamento no existe");
-        return null;
+        throw new EmployeeNotFoundExceptions();
     }
 
     @Override
-    public Departamento datosDepartamento(String nombre) {
+    public Departamento datosDepartamento(String nombre) throws DepartmentNotFoundException {
         for (int i = 0; i < listaDepartamentos.length; i++) {
             Departamento departamento = listaDepartamentos[i];
             if (departamento.getNombreDepartamento().equals(nombre)) {
@@ -36,12 +38,12 @@ public class Empresa implements IEmpresa {
                 return departamento;
             }
         }
-        System.out.println("Error el departamento no existe");
-        return null;
+        throw new DepartmentNotFoundException();
     }
 
+
     @Override
-    public Empleado datosEmpleado(String nif) {
+    public Empleado datosEmpleado(String nif) throws DepartmentNotFoundException {
         for (int i = 0; i < listaDepartamentos.length; i++) {
             Departamento departamento = listaDepartamentos[i];
             for (int j = 0; j < departamento.getListaEmpleados().length; j++) {
@@ -52,7 +54,7 @@ public class Empresa implements IEmpresa {
                 }
             }
         }
-        return null;
+        throw new DepartmentNotFoundException();
     }
 
     public String getNombreEmpresa() {

@@ -1,5 +1,8 @@
 package org.iesfm.Empresa;
 
+import org.iesfm.Empresa.exceptions.DepartmentNotFoundException;
+import org.iesfm.Empresa.exceptions.EmployeeNotFoundExceptions;
+
 import java.util.Scanner;
 
 public class Main {
@@ -87,10 +90,22 @@ public class Main {
     public static void main(String[] args) {
         Empresa empresa1=infoEmpresa();
         System.out.println("Introduce un NIF para encontrar un empleado");
-        empresa1.datosEmpleado(scanner.nextLine());
+        try {
+            empresa1.datosEmpleado(scanner.nextLine());
+        } catch (DepartmentNotFoundException e) {
+            System.out.println("No se ha encontrado el departamento");
+        }
         System.out.println("Introduce el nombre de un departamento para conocer suinformacion");
-        empresa1.datosDepartamento(scanner.nextLine());
+        try {
+            empresa1.datosDepartamento(scanner.nextLine());
+        } catch (DepartmentNotFoundException e) {
+            System.out.println("No se ha encontrado el departamento");
+        }
         System.out.println("Introduce el nombre de un departamento para conocer los empleados que trabajan en el");
-        empresa1.empleados(scanner.nextLine());
+        try {
+            empresa1.empleados(scanner.nextLine());
+        } catch (EmployeeNotFoundExceptions e) {
+            System.out.println("No se ha encontrado el empleado");
+        }
     }
 }
